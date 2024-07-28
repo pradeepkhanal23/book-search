@@ -33,3 +33,16 @@ export const GET_ME = gql`
     }
   }
 `;
+
+// Query to search for books using Google Books API
+export const SEARCH_BOOKS = gql`
+  query searchBooks($query: String!) {
+    searchBooks(query: $query) {
+      bookId
+      authors
+      title
+      description
+      image
+    }
+  }
+`;
