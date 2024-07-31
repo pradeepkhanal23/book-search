@@ -14,6 +14,7 @@ export const LOGIN_USER = gql`
           title
           authors
           description
+          image
         }
       }
     }
@@ -21,9 +22,9 @@ export const LOGIN_USER = gql`
 `;
 
 // Mutation to create a new user
-export const CREATE_USER = gql`
-  mutation createUser($username: String!, $email: String!, $password: String!) {
-    createUser(username: $username, email: $email, password: $password) {
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
@@ -34,6 +35,7 @@ export const CREATE_USER = gql`
           title
           authors
           description
+          image
         }
       }
     }
@@ -42,8 +44,8 @@ export const CREATE_USER = gql`
 
 // Mutation to save a book
 export const SAVE_BOOK = gql`
-  mutation saveBook($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
+  mutation saveBook($input: BookInput!) {
+    saveBook(input: $input) {
       _id
       username
       email
@@ -52,6 +54,7 @@ export const SAVE_BOOK = gql`
         title
         authors
         description
+        image
       }
     }
   }
@@ -69,6 +72,7 @@ export const REMOVE_BOOK = gql`
         title
         authors
         description
+        image
       }
     }
   }

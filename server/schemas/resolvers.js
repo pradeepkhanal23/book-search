@@ -3,15 +3,6 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("savedBooks");
-    },
-    books: async () => {
-      return Book.find();
-    },
-    book: async (parent, { bookId }) => {
-      return Book.findOne({ bookId });
-    },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("savedBooks");
@@ -20,11 +11,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    createUser: async (parent, { username, email, password }) => {
+    //adding user
+    addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
       return { token, user };
     },
+
+    //user login
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -41,6 +35,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
+    //saving the book
     saveBook: async (parent, { input }, context) => {
       if (context.user) {
         try {

@@ -3,7 +3,7 @@ const { GraphQLError } = require("graphql");
 
 // set token secret and expiration date
 const secret = process.env.JWT_SECRET;
-const expiration = "1h";
+const expiration = process.env.JWT_EXPIRATION;
 
 module.exports = {
   // using graphql error type to throw an error when un unauthenticated user tries to access the restricted resources

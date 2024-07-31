@@ -10,6 +10,7 @@ const { typeDefs, resolvers } = require("./schemas");
 
 // connection file
 const db = require("./config/connection");
+const { authMiddleware } = require("./utils/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -29,7 +30,12 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   // contrary to traditional RESTApi sever, where we create a routes folder and pass it onto the middleware, we are using a single endpoint "graphql" and passing it to the express middleware which has a graphql server implementation (this is special express server imported from apollo to support graphql)
-  app.use("/graphql", expressMiddleware(server));
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: authMiddleware,
+    })
+  );
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === "production") {
